@@ -3,25 +3,55 @@
 
 import curses
 
-def main(curses_sceen):
+
+# curses.init_pair(1, fg, bg)
+# curses.color_pair(1)
+# TODO(Ryan): Add color
+def draw_ch(x, y, ch):
+    clip_x = 0
+    if x >= screen_width:
+        clip_x = screen_width
+    if x < 0:
+        clip_x = 0
+
+    clip_y = 0
+    if y >= screen_width:
+        clip_y = screen_width
+    if y < 0:
+        clip_y = 0
+
+    curses.addch(y, x, ch)
+
+def draw_rect(x1, y1, x2, y2, ch):
+    pass
+
+def main(curses_screen):
+    if not curses.has_colors():
+        return
+
     curses.curs_set(False)
-    curses.nodelay(True)
+    curses_screen.nodelay(True)
 
     width = curses.COLS
     height = curses.LINES 
-    have_colors = curses.has_colors()
 
+    x = y = 0
     while True:
+        # TODO(Ryan): If non-blocking, does this still call refresh()?
         input_ch = curses_screen.getch()
         if input_ch == ord("a"):
-            pass
+            x += 1
+            y += 1
 
-        curses_sceen.clear()
+        # NOTE(Ryan): Calling clear() caused flickering
+        curses_screen.erase()
 
-        # addch()
-        curses_sceen.addstr(y, x, "", curses.A_UNDERLINE)
+        # will print and advance cursor. so if this off screen, will through exception
+        # therefore have a function that clips
+        # TODO(Ryan): Enable stepping into python library functions (perhaps turn off smart step?)
+        curses_screen.addstr(y, x, "hi there")
 
-        curses_sceen.refresh()
+        curses_screen.refresh()
 
 
 # NOTE(Ryan): This will handle initialisations for us, e.g. non-buffered input, no key echo, colors, etc.
