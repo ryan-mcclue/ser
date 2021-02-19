@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: zlib-acknowledgement
+
+* 
+
+!*/
+
+!.gitignore
+
+!cli.py
+!con.py
+!ser.py
+!test_example.py
+!build-tests.bash
+!misc/**/*.py
+!misc/**/*.bash
